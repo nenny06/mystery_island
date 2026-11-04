@@ -1,3 +1,6 @@
+from game import new_game
+player = new_game()
+
 print("MYSTERY ISLAND")
 print("WELCOME TO THE GAME, HOPE YOU ARE PREPARED")
 
@@ -5,30 +8,13 @@ name = input("What is your name player: ")
 print(f"Welcome to Mystery Island, {name}!")
 
 
-inventory = []
-print(f"{name} your inventory is empty")
-#inventory.append("Rope")
-#inventory.append("Lantern")
-print(inventory)
 
-energy = 5
-#inventory = ["Rope", "Lantern"]
-#if "Rope" in inventory:
-    #print("You can cross the bridge!")
-#else:
-    #energy -= 1
-    #print(energy)
-    #print("You need a rope to cross!")
+print(f"{name}, your inventory is empty.")
+print(player["inventory"])
 
-#current_location = "Beach"
-#print(f"Your current location is: {current_location}")
-#current_location = "Jungle"
-#print(f"Your current location is: {current_location}")
-#current_location = "Cave"
-#print(f"Your current location is: {current_location}")
+print(f"Your energy is: {player['energy']}")
+print(f"Your current location is: {player['current_location']}")
 
-visited_locations = ["Beach"]
-current_location = "Beach"
 
 
 playing = True
@@ -51,35 +37,78 @@ while playing:
     if choice == "1":
         print("Enjoy the sunshine")
         print("There's a Rope here")
-        if "Rope" in inventory:
+        if "Rope" in player["inventory"]:
             print("Already have rope in inventory")
-        elif "Rope" not in inventory:
+        elif "Rope" not in player["inventory"]:
             invent = input("Do you want to collect the rope: ")
             invent = invent.lower()
             if invent == "yes":
-                inventory.append("Rope")
-                print(inventory)
-                energy += 2
-                print(f"You collected a rope and energy has increased to: {energy}")
+                player["inventory"].append("Rope")
+                print(player["inventory"])
+                player["energy"] += 2
+                print(f"You collected a rope and energy has increased to: {player['energy']}")
         
             else:
                 print("Rope not collected")
+
+
     elif choice == "2":
         print("Beware of lurking Beast")
-        if "Jungle" not in visited_locations:
-            visited_locations.append("Jungle")
-            current_location = "Jungle"
-            energy -= 1
-            print(f"You changed to a new location  and remaining energy is: {energy}")
-            print(current_location)
+
+        if player["current_location"] == "Jungle":
+            print("You are already in the Jungle!")
+
         else:
-            current_location = "Jungle"
-            energy -= 2
-            print(f"You want back to a previous location  and remaining energy is: {energy}")
-            print(current_location)
+            if "Jungle" in player["visited_locations"]:
+                required_energy = 2
+                print("You have visited the Jungle before.")
+            else:
+                required_energy = 1
+                print("This is a new location.")
+
+            if player["energy"] >= required_energy:
+                player["energy"] -= required_energy
+                player["current_location"] = "Jungle"
+
+                if "Jungle" not in player["visited_locations"]:
+                    player["visited_locations"].append("Jungle")
+
+                print(f"Current location: {player['current_location']}")
+                print(f"Remaining energy: {player['energy']}")
+
+            else:
+                print("You don't have enough energy!")
+                print("GAME OVER!")
+                playing = False
+        print("You discovered a Latern!")
+        if "Lantern" in player["inventory"]:
+            print("Already have Lantern in inventory")
+        elif "Lantern" not in player["inventory"]:
+            answer = input("Do you want to add Lantern in your inventory: ")
+            answer = answer.lower()
+            if answer == "yes":
+                player["inventory"].append("Lantern")
+                print(player["inventory"])
+                player["energy"] += 2
+                print(f"You collected a Lantern and energy has increased to: {player['energy']}")
+        
+        else:
+            print("Lantern not collected")
+
             
     elif choice == "3":
         print("Make sure you have a Lantern")
+        if "Lantern" in player["inventory"]:
+            print("You are eligible to explore")
+        else:
+            print("You will loss energy")
+            goback = input("do you want to go back and get lantern: ")
+            goback = goback.lower()
+            if goback == "yes":
+                print("Go back to Jungle and collect the lantern")
+            else:
+                player["energy"] -= 2
+                print(f"Your energy has decreased to: {player['energy']}")
     elif choice == "4":
         print("Using Rope will be crucial")
     elif choice == "5":
@@ -91,3 +120,5 @@ while playing:
         playing = False
     else:
         print("Invalid Location")
+
+
