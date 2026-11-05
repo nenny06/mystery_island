@@ -1,5 +1,7 @@
-from game import new_game
+from game import new_game, available_actions, apply_action
+
 player = new_game()
+
 
 print("MYSTERY ISLAND")
 print("WELCOME TO THE GAME, HOPE YOU ARE PREPARED")
@@ -17,23 +19,45 @@ print(f"Your current location is: {player['current_location']}")
 
 
 
+
 playing = True
 
 while playing:
 
+
     print("====== MYSTERY ISLAND ADVENTURE======")
 
+    choices = available_actions()
 
-    print("1. Explore Beach")
-    print("2. Explore Jungle")
-    print("3. Explore Cave")
-    print("4. Visit Old Bridge")
-    print("5. Visit Lighthouse")
-    print("6. Check Inventory")
-    print("7. Quit Game")
+    for number, action in enumerate(choices, start=1):
+        print(f"{number}. {action}")
 
     choice = input("Choose your Location: ")
 
+    action = choices[int(choice) - 1]
+
+    if action == "Explore Beach":
+        answer = input("Do you want to collect the Rope? ")
+        answer = answer.lower()
+
+    elif action == "Explore Jungle":
+        print("You discovered a LAntern")
+        answer = input("Do you want to collect the Lantern? ")
+        answer = answer.lower()
+
+    else:
+        answer = None
+    
+    apply_action(player, action, answer)
+
+
+
+
+
+
+    print(f"You selected: {action}")
+
+'''
     if choice == "1":
         print("Enjoy the sunshine")
         print("There's a Rope here")
@@ -120,5 +144,7 @@ while playing:
         playing = False
     else:
         print("Invalid Location")
+'''
+
 
 
