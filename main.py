@@ -1,4 +1,4 @@
-from game import new_game, available_actions, apply_action
+from game import new_game, available_actions, apply_action, is_win
 
 player = new_game()
 

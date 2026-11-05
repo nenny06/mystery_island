@@ -3,7 +3,7 @@ def new_game():
     "inventory": [],
     "energy": 5,
     "visited_locations": ["Beach"],
-    "current_location": "Beach"
+    "current_location": "Beach",
     "bridge_crossed": False
 }
     return player
@@ -85,22 +85,25 @@ def apply_action(player, action, answer):
 
 
 def is_win(player):
-    if "Rope" in player["inventory"] and "Lantern" in player["inventory"]:
-        return True
-    else:
-        return False
-    if player["current_location"] == "Lighthouse":
-        return True
-    else:
-        return False
-    if player["energy"] >= 1:
+    if ("Rope" in player["inventory"] 
+        and "Lantern" in player["inventory"]
+        and player["energy"] >= 1
+        and "Beach" in player["visited_locations"] 
+        and "Jungle" in player["visited_locations"]
+        and "Cave" in player["visited_locations"] 
+        and "Old Bridge" in player["visited_locations"]
+        and "Lighthouse" in player["visited_locations"]
+        and player["current_location"] == "Lighthouse"
+        and player["bridge_crossed"]
+
+    ):
         return True
     else:
         return False
 
-    if "Beach" in player["visited_locations"] and "Jungle" in player["visited_locations"]
-        and "Cave" in player["visited_locations"] and "Old Bridge" in player["visited_locations"]
-        and "Lighthouse" in player["visited_locations"]:
+    # "Beach" in player["visited_locations"] and "Jungle" in player["visited_locations"]
+        #and "Cave" in player["visited_locations"] and "Old Bridge" in player["visited_locations"]
+        #and "Lighthouse" in player["visited_locations"]:
 
 
     
