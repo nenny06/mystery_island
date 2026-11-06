@@ -5,6 +5,8 @@ def new_game():
     "visited_locations": ["Beach"],
     "current_location": "Beach",
     "bridge_crossed": False
+    "game_over": False
+    "won": False
 }
     return player
     
@@ -48,8 +50,11 @@ def apply_action(player, action, answer):
 
         else:
             if "Jungle" in player["visited_locations"]:
+                print("You have visited the Jungle before, going back requires energy")
+
                 required_energy = 2
-                print("You have visited the Jungle before.")
+                
+
             else:
                 required_energy = 1
                 print("This is a new location.")
@@ -67,7 +72,7 @@ def apply_action(player, action, answer):
             else:
                 print("You don't have enough energy!")
                 print("GAME OVER!")
-                playing = False
+                
 
         print("You discovered a Lantern!")
         if "Lantern" in player["inventory"]:
@@ -82,6 +87,46 @@ def apply_action(player, action, answer):
         
             else:
                 print("Lantern not collected")
+
+    elif action == "Explore Cave":
+        print("Make sure you have a Lantern")
+        if "Lantern" in player["inventory"]:
+            print("You are eligible to explore")
+        else:
+            print("You will loss energy")
+            
+            if answer == "yes":
+                print("Go back to Jungle and collect the lantern")
+            else:
+                player["energy"] -= 2
+                print(f"Your energy has decreased to: {player['energy']}")
+    elif action == "Visit Old Bridge":
+        print("Using Rope will be crucial")
+        print("Make sure you have a rope you will loss energy if don't have a rope5")
+        if "Rope" in player["inventory"]:
+            print("You are eligible to explore")
+        else:
+            print("You will loss energy")
+            
+            if answer == "yes":
+                print("Go back to Beach and collect the rope")
+            else:
+                player["energy"] -= 2
+                print(f"Your energy has decreased to: {player['energy']}")
+        player["bridge_crossed"] == True
+
+    elif action == "Visit Lighthouse":
+        player["won"] = True
+        player["game_over" = True]
+        print("Successfully Arrived and restore the lighthouse beacon")
+    elif action == "Check Inventory":
+        print("Inventory")
+    elif action == "Quit Game":
+        print("Goodbye!")
+        playing = False
+    else:
+        print("Invalid Location")
+
 
 
 def is_win(player):
@@ -101,11 +146,7 @@ def is_win(player):
     else:
         return False
 
-    # "Beach" in player["visited_locations"] and "Jungle" in player["visited_locations"]
-        #and "Cave" in player["visited_locations"] and "Old Bridge" in player["visited_locations"]
-        #and "Lighthouse" in player["visited_locations"]:
-
-
+   
     
 
 

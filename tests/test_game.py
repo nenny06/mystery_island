@@ -126,6 +126,54 @@ class TestNewGame(unittest.TestCase):
         apply_action(player, "Explore Beach", "yes")
 
         self.assertIn("Rope", player["inventory"])
+        self.assertEqual(player["energy"], 7)
+
+
+    def test_player_refuses_rope(self):
+        player = new_game()
+
+        apply_action(player, "Explore Beach", "no")
+        self.assertNotIn("Rope", player["inventory"])
+        self.assertEqual(player["energy"], 5)
+
+
+    def test_collect_lantern(self):
+        player = new_game()
+
+        apply_action(player, "Explore Jungle", "yes")
+        
+        self.assertIn("Lantern", player["inventory"])
+        self.assertEqual(player["energy"], 6)
+        self.assertIn("Jungle", player["visited_locations"])
+
+
+    def test_player_refuses_lantern(self):
+        player = new_game()
+
+        apply_action(player, "Explore Jungle", "no")
+
+        self.assertNotIn("Lantern", player["inventory"])
+        self.assertEqual(player["energy"], 4)
+        self.assertIn("Jungle", player["visited_locations"])
+
+'''
+    def test_revisit_jungle(self):
+        player = new_game()
+
+        apply_action(player, "Explore Jungle", "no")
+
+        apply_action(player, "Explore Beach", "no")
+
+        apply_action(player, "Explore Jungle", "no")
+
+        self.assertEqual(player["energy"], 2)
+
+        '''
+
+
+
+
+
         
 
 
